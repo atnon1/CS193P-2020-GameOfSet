@@ -8,33 +8,32 @@
 
 /* Begin PBXBuildFile section */
 		8451C18A2589F140006ED99E /* Game_of_SETApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451C1772589F13D006ED99E /* Game_of_SETApp.swift */; };
-		8451C18B2589F140006ED99E /* Game_of_SETApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451C1772589F13D006ED99E /* Game_of_SETApp.swift */; };
-		8451C18C2589F140006ED99E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451C1782589F13D006ED99E /* ContentView.swift */; };
-		8451C18D2589F140006ED99E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451C1782589F13D006ED99E /* ContentView.swift */; };
+		8451C18C2589F140006ED99E /* GameOfSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451C1782589F13D006ED99E /* GameOfSetView.swift */; };
 		8451C18E2589F140006ED99E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8451C1792589F140006ED99E /* Assets.xcassets */; };
-		8451C18F2589F140006ED99E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8451C1792589F140006ED99E /* Assets.xcassets */; };
+		8451C19F2589F1C2006ED99E /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451C19C2589F1C2006ED99E /* GridLayout.swift */; };
+		8451C1A12589F1C2006ED99E /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451C19D2589F1C2006ED99E /* Grid.swift */; };
+		8451C1A32589F1C3006ED99E /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451C19E2589F1C2006ED99E /* Cardify.swift */; };
+		8451C1A82589F21F006ED99E /* Array+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451C1A72589F21F006ED99E /* Array+Identifiable.swift */; };
+		8451C1AD2589F2AB006ED99E /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451C1AC2589F2AB006ED99E /* SetGame.swift */; };
+		845C0771258AC3F00064C35E /* SetGameProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845C0770258AC3F00064C35E /* SetGameProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8451C1772589F13D006ED99E /* Game_of_SETApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game_of_SETApp.swift; sourceTree = "<group>"; };
-		8451C1782589F13D006ED99E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		8451C1782589F13D006ED99E /* GameOfSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOfSetView.swift; sourceTree = "<group>"; };
 		8451C1792589F140006ED99E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8451C17E2589F140006ED99E /* Game of SET.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game of SET.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8451C1812589F140006ED99E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8451C1862589F140006ED99E /* Game of SET.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game of SET.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8451C1882589F140006ED99E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8451C1892589F140006ED99E /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		8451C19C2589F1C2006ED99E /* GridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
+		8451C19D2589F1C2006ED99E /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		8451C19E2589F1C2006ED99E /* Cardify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
+		8451C1A72589F21F006ED99E /* Array+Identifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Identifiable.swift"; sourceTree = "<group>"; };
+		8451C1AC2589F2AB006ED99E /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
+		845C0770258AC3F00064C35E /* SetGameProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		8451C17B2589F140006ED99E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8451C1832589F140006ED99E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -49,7 +48,6 @@
 			children = (
 				8451C1762589F13D006ED99E /* Shared */,
 				8451C1802589F140006ED99E /* iOS */,
-				8451C1872589F140006ED99E /* macOS */,
 				8451C17F2589F140006ED99E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,7 +56,13 @@
 			isa = PBXGroup;
 			children = (
 				8451C1772589F13D006ED99E /* Game_of_SETApp.swift */,
-				8451C1782589F13D006ED99E /* ContentView.swift */,
+				8451C1782589F13D006ED99E /* GameOfSetView.swift */,
+				845C0770258AC3F00064C35E /* SetGameProvider.swift */,
+				8451C1AC2589F2AB006ED99E /* SetGame.swift */,
+				8451C1A72589F21F006ED99E /* Array+Identifiable.swift */,
+				8451C19E2589F1C2006ED99E /* Cardify.swift */,
+				8451C19D2589F1C2006ED99E /* Grid.swift */,
+				8451C19C2589F1C2006ED99E /* GridLayout.swift */,
 				8451C1792589F140006ED99E /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -68,7 +72,6 @@
 			isa = PBXGroup;
 			children = (
 				8451C17E2589F140006ED99E /* Game of SET.app */,
-				8451C1862589F140006ED99E /* Game of SET.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -79,15 +82,6 @@
 				8451C1812589F140006ED99E /* Info.plist */,
 			);
 			path = iOS;
-			sourceTree = "<group>";
-		};
-		8451C1872589F140006ED99E /* macOS */ = {
-			isa = PBXGroup;
-			children = (
-				8451C1882589F140006ED99E /* Info.plist */,
-				8451C1892589F140006ED99E /* macOS.entitlements */,
-			);
-			path = macOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -110,23 +104,6 @@
 			productReference = 8451C17E2589F140006ED99E /* Game of SET.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8451C1852589F140006ED99E /* Game of SET (macOS) */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8451C1952589F140006ED99E /* Build configuration list for PBXNativeTarget "Game of SET (macOS)" */;
-			buildPhases = (
-				8451C1822589F140006ED99E /* Sources */,
-				8451C1832589F140006ED99E /* Frameworks */,
-				8451C1842589F140006ED99E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Game of SET (macOS)";
-			productName = "Game of SET (macOS)";
-			productReference = 8451C1862589F140006ED99E /* Game of SET.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -137,9 +114,6 @@
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
 					8451C17D2589F140006ED99E = {
-						CreatedOnToolsVersion = 12.2;
-					};
-					8451C1852589F140006ED99E = {
 						CreatedOnToolsVersion = 12.2;
 					};
 				};
@@ -158,7 +132,6 @@
 			projectRoot = "";
 			targets = (
 				8451C17D2589F140006ED99E /* Game of SET (iOS) */,
-				8451C1852589F140006ED99E /* Game of SET (macOS) */,
 			);
 		};
 /* End PBXProject section */
@@ -172,14 +145,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8451C1842589F140006ED99E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8451C18F2589F140006ED99E /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -187,17 +152,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8451C18C2589F140006ED99E /* ContentView.swift in Sources */,
+				8451C19F2589F1C2006ED99E /* GridLayout.swift in Sources */,
+				845C0771258AC3F00064C35E /* SetGameProvider.swift in Sources */,
+				8451C18C2589F140006ED99E /* GameOfSetView.swift in Sources */,
 				8451C18A2589F140006ED99E /* Game_of_SETApp.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8451C1822589F140006ED99E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8451C18D2589F140006ED99E /* ContentView.swift in Sources */,
-				8451C18B2589F140006ED99E /* Game_of_SETApp.swift in Sources */,
+				8451C1A32589F1C3006ED99E /* Cardify.swift in Sources */,
+				8451C1A12589F1C2006ED99E /* Grid.swift in Sources */,
+				8451C1A82589F21F006ED99E /* Array+Identifiable.swift in Sources */,
+				8451C1AD2589F2AB006ED99E /* SetGame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,54 +322,6 @@
 			};
 			name = Release;
 		};
-		8451C1962589F140006ED99E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = YK9XLY7582;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = macOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.mail.at-mak.Game-of-SET";
-				PRODUCT_NAME = "Game of SET";
-				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		8451C1972589F140006ED99E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = YK9XLY7582;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = macOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.mail.at-mak.Game-of-SET";
-				PRODUCT_NAME = "Game of SET";
-				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -425,15 +339,6 @@
 			buildConfigurations = (
 				8451C1932589F140006ED99E /* Debug */,
 				8451C1942589F140006ED99E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8451C1952589F140006ED99E /* Build configuration list for PBXNativeTarget "Game of SET (macOS)" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8451C1962589F140006ED99E /* Debug */,
-				8451C1972589F140006ED99E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
