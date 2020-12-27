@@ -96,15 +96,17 @@ struct Cardify: AnimatableModifier {
     }
     
     private let cornerRadius: CGFloat = 10.0
-    private let edgeLineWidth: CGFloat = 3.0
+    private let edgeLineWidth: CGFloat = 2.0
 }
 
 
 extension View {
+    // Returncs view of card
     func cardify(isFaceUp: Bool) -> some View {
         self.modifier(Cardify(isFaceUp: isFaceUp))
     }
     
+    // Returns view of card with filling of frame and backpart
     func cardify<S: ShapeStyle>(withFilling filling: S, isFaceUp: Bool) -> some View {
         self.modifier(Cardify(withFilling: filling, isFaceUp: isFaceUp))
     }

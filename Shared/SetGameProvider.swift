@@ -22,7 +22,17 @@ class SetGameProvider: ObservableObject {
     
     
     // MARK: - Intents
+    func startGame() {
+        game.startGame()
+    }
     
+    func choose(card: SetCard) {
+        game.choose(card)
+    }
+    
+    func dealCards() {
+        game.dealCards()
+    }
 }
 
 

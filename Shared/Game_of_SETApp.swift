@@ -11,7 +11,7 @@ import SwiftUI
 struct Game_of_SETApp: App {
     var body: some Scene {
         WindowGroup {
-            GameOfSetView(gameProvider: SetGameProvider())
+            GameOfSetView(game: SetGameProvider())
         }
     }
 }
