@@ -95,7 +95,7 @@ struct Cardify: AnimatableModifier {
         angularGradient = filling as? AngularGradient
     }
     
-    private let cornerRadius: CGFloat = 10.0
+    private let cornerRadius: CGFloat = 5.0
     private let edgeLineWidth: CGFloat = 2.0
 }
 

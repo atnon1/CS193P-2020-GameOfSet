@@ -8,6 +8,7 @@
 import Foundation
 
 struct SetGame {
+    var score = SetScore()
     var deck: [SetCard]
     var openCards: [SetCard]
     var matchedSets: [[SetCard]] = []
@@ -29,10 +30,22 @@ struct SetGame {
             }
         }
     }
+    var firstOpenSet: (SetCard, SetCard, SetCard)? {
+        for idx1 in 0..<openCards.count - 2 {
+            for idx2 in idx1+1..<openCards.count - 1 {
+                for idx3 in idx2+1..<openCards.count {
+                    if cardsMakeSet(cards: [openCards[idx1], openCards[idx2], openCards[idx3]]) {
+                        return (openCards[idx1], openCards[idx2], openCards[idx3])
+                    }
+                }
+            }
+        }
+        return nil
+    }
 
     init() {
         deck = []
-        for symbol in [SetCard.SetSymbol.diamond] { //SetCard.SetSymbol.allCases {
+        for symbol in [SetCard.SetSymbol.diamond] { // SetCard.SetSymbol.allCases { //
             for shading in SetCard.SetShading.allCases {
                 for color in SetCard.SetColor.allCases  {
                     for number in (1...symbolMaxNumber) {
@@ -45,8 +58,6 @@ struct SetGame {
         openCards = []
     }
     
-
-    
     mutating func choose(_ card: SetCard) {
         let indices = choosenCardsIndices
         if choosenCardsIndices.count == setCardsNumber {
@@ -56,7 +67,8 @@ struct SetGame {
                 for idx in indices.sorted(by: >) {
                     matchedSet.append(openCards.remove(at: idx))
                     if openCards.count < spaceOnTable {
-                        if let newCard = deck.popLast() {
+                        if var newCard = deck.popLast() {
+                            newCard.isFaceUp = true
                             openCards.insert(newCard, at: idx)
                         }
                     }
@@ -64,20 +76,23 @@ struct SetGame {
                 matchedSets.append(matchedSet)
             }
         }
-        if let mathingIndex = openCards.firstIndex(matching: card) {
-            print("Choosen \(openCards[mathingIndex])")
-            if !(indices.contains(mathingIndex) && indices.count == setCardsNumber) {
-                openCards[mathingIndex].isChoosen = !openCards[mathingIndex].isChoosen
-            }
-            if choosenCardsIndices.count == setCardsNumber {
-                if cardsMakeSet(cards: choosenCardsIndices.map {openCards[$0]}) {
-                    for idx in choosenCardsIndices {
-                        print("SET")
-                        openCards[idx].isMatched = true
-                    }
-                } else {
-                    for idx in choosenCardsIndices {
-                        openCards[idx].isWrongSet = true
+        if score.currentPlayer != nil {
+            if let mathingIndex = openCards.firstIndex(matching: card) {
+                print("Choosen \(openCards[mathingIndex])")
+                if !(indices.contains(mathingIndex) && indices.count == setCardsNumber) {
+                    openCards[mathingIndex].isChoosen = !openCards[mathingIndex].isChoosen
+                }
+                if choosenCardsIndices.count == setCardsNumber {
+                    if cardsMakeSet(cards: choosenCardsIndices.map {openCards[$0]}) {
+                        for idx in choosenCardsIndices {
+                            print("SET")
+                            openCards[idx].isMatched = true
+                        }
+                        score.getPoints()
+                    } else {
+                        for idx in choosenCardsIndices {
+                            openCards[idx].isWrongSet = true
+                        }
                     }
                 }
             }
@@ -89,8 +104,15 @@ struct SetGame {
         dealCards(spaceOnTable)
     }
     
-    mutating func dealCards() {
+    mutating func dealCards(by player: SetPlayer) {
+        if firstOpenSet != nil {
+            score.getPenalty(for: player)
+        }
         dealCards(additionalCardNumber)
+    }
+    
+    mutating func claimSet(for player: SetPlayer) {
+        score.setTimer(for: player)
     }
     
     private mutating func dealCards(_ quantity: Int) {
@@ -130,8 +152,7 @@ struct SetGame {
         return valuesMakeSet(symbols) && valuesMakeSet(colors) && valuesMakeSet(shadings) &&  valuesMakeSet(numbers)
     }
     
-    
-    // MARK: Constants
+    // MARK: - Constants
     private let symbolMaxNumber = 3
     private let spaceOnTable = 12
     private let additionalCardNumber = 3
@@ -143,7 +164,7 @@ struct SetCard: Identifiable {
     let shading: SetShading
     let color: SetColor
     let number: Int
-    var isFaceUp = true
+    var isFaceUp = false
     var isChoosen = false {
         willSet{
             if !newValue {
@@ -173,6 +194,70 @@ struct SetCard: Identifiable {
         case red
         case green
     }
+}
+
+enum SetPlayer {
+    case playerOne
+    case playerTwo
+}
+
+struct SetScore {
+    private var playerOneScore: Double = 0
+    private var playerTwoScore: Double = 0
     
+    // how long this card has ever been face up
+    private var setTimerTime: TimeInterval {
+        if let lastSetDate = self.lastSetDate {
+            return Date().timeIntervalSince(lastSetDate)
+        } else {
+            return 0
+        }
+    }
+    // the last time this card was turned face up (and is still face up)
+    var lastSetDate: Date?
+    // the accumulated time this card has been face up in the past
+    // (i.e. not including the current time it's been face up if it is currently so)
+    var currentPlayer: SetPlayer?
+
+    mutating func getPoints() {
+        switch currentPlayer {
+        case .playerOne: playerOneScore += countPoints(inTime: setTimerTime)
+        case .playerTwo: playerTwoScore += countPoints(inTime: setTimerTime)
+        default: break
+        }
+        lastSetDate = nil
+        currentPlayer = nil
+    }
+    
+    mutating func getPenalty(for player: SetPlayer) {
+        switch player {
+        case .playerOne: playerOneScore -= penaltyPoints
+        case .playerTwo: playerTwoScore -= penaltyPoints
+        }
+    }
+    
+    mutating func setTimer(for player: SetPlayer) {
+        if player != currentPlayer {
+            currentPlayer = player
+            lastSetDate = Date()
+        }
+    }
+    
+    private func countPoints(inTime time: Double) -> Double {
+        switch time {
+        case 0...(maximumPoints-1): return maximumPoints - time
+        default:
+            return defaultPoints
+        }
+    }
+    
+    var points: (firstPlayer: Double, secondPlayer: Double) {
+        return (playerOneScore, playerTwoScore)
+    }
+    
+    // MARK: - Constants
+    private let maximumPoints = 10.0
+    private let penaltyPoints = 5.0
+    private let defaultPoints = 1.0
     
 }

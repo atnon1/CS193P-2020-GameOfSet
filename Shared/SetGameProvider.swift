@@ -20,9 +20,25 @@ class SetGameProvider: ObservableObject {
         game.openCards
     }
     
+    var score: (firstPlayer: Double, secondPlayer: Double) {
+        let points = game.score.points
+        return (points.firstPlayer, points.secondPlayer)
+    }
+    
+    var cheatSet: (SetCard, SetCard, SetCard)? {
+        game.firstOpenSet
+    }
+    
+    func cheatSetContains(card: SetCard) -> Bool {
+        if let cheatSet = cheatSet {
+            return [cheatSet.0, cheatSet.1, cheatSet.2].firstIndex(matching: card) != nil
+        }
+        return false
+    }
     
     // MARK: - Intents
     func startGame() {
+        game = SetGame()
         game.startGame()
     }
     
@@ -30,8 +46,12 @@ class SetGameProvider: ObservableObject {
         game.choose(card)
     }
     
-    func dealCards() {
-        game.dealCards()
+    func dealCards(by player: SetPlayer) {
+        game.dealCards(by: player)
+    }
+    
+    func claimSet(for player: SetPlayer) {
+        game.claimSet(for: player)
     }
 }
 

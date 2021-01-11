@@ -8,10 +8,19 @@
 import SwiftUI
 
 struct GameOfSetView: View {
-    @ObservedObject var game : SetGameProvider
     
+    
+    var columns = [
+        GridItem(.flexible(minimum: 20), spacing: 0),
+        GridItem(.flexible(minimum: 20), spacing: 0),
+        GridItem(.flexible(minimum: 20), spacing: 0)
+    ]
+    @ObservedObject var game : SetGameProvider
+    @State var setButtonIsDisabled = false
+    @State var showCheat = false
     @ViewBuilder
     var body: some View {
+       // var deckPosition = CGRect.zero
         VStack(alignment: .center) {
             HStack{
                 Button(action: {
@@ -23,44 +32,82 @@ struct GameOfSetView: View {
                     }
                 )
                 .padding()
-                .padding(.horizontal)
-                Spacer()
+                Text("P2 score: \(Int(game.score.secondPlayer))")
+                    .rotationEffect(Angle.degrees(180))
+                setButtonView(for: .playerTwo)
+                    .rotationEffect(Angle.degrees(180))
+                    .padding(.horizontal)
+                dealButtonView(for: .playerTwo)
+                    .rotationEffect(Angle.degrees(180))
             }
+
             Grid(game.cardsOnTable) { card in
-                SetCardView(card: card)
+                SetCardView(card: card, showCheat: game.cheatSetContains(card: card) && showCheat)
                     .aspectRatio(2/3, contentMode: .fit)
                     .padding()
-                    .transition(randomOutsideOffset())
-                   // .offset(x: card.isWrongSet ? 10 : 0)
-                  //  .animation(Animation.default.repeatCount(3))
-                    //.offset(x: card.isWrongSet ? -10 : 0)
-                    //.animation(Animation.default.repeatCount(3))
                     .scaleEffect(card.isChoosen ? choosenCardScale : 1)
+                    .animation(.linear)
+                    .layoutPriority(10)
+                    .rotationEffect(Angle.degrees(card.isMatched ? cardMatchRotationDegree : cardDefaultRotationDegree))
+                    .transition(randomOutsideOffset())
                     .onTapGesture {
                         withAnimation(.linear(duration: 1)){
                             game.choose(card: card)
+                            showCheat = false
                         }
                     }
-                
+               // }
             }
             .onAppear {
                 withAnimation(.linear(duration: 1)) {
                     game.startGame()
                 }
             }
-            Button (action: {
-                withAnimation {
-                    game.dealCards()
-                }
-            }, label: {
-                Text("Deal more cards")
-                }
-            )
-            .disabled(game.deck.isEmpty)
-            .padding()
+            HStack {
+                dealButtonView(for: .playerOne)
+                setButtonView(for: .playerOne)
+                .padding()
+                Text("P1 score: \(Int(game.score.firstPlayer))")
+                Button(
+                    action: {withAnimation(Animation.linear(duration: 0.5).repeatCount(3)) {
+                        showCheat = true
+                        }
+                    },
+                    label: {
+                    Text("Cheat")
+                    }
+                )
+                .padding()
+            }
         }
     }
     
+    func dealButtonView(for player: SetPlayer) -> some View {
+        Button (action: {
+            withAnimation {
+                game.dealCards(by: player)
+            }
+        }, label: {
+            Text("Deal 3 cards")
+            }
+        )
+        .disabled(game.deck.isEmpty)
+    }
+    
+    func setButtonView(for player: SetPlayer) -> some View {
+        Button(action: {
+            tapSet(by: player)
+        }, label: {
+            Text("SET")
+        })
+        .disabled(setButtonIsDisabled)
+    }
+    
+    func tapSet(by player: SetPlayer) {
+        game.claimSet(for: player)
+        setButtonIsDisabled = true
+        Timer.scheduledTimer(withTimeInterval: setButtonNotActiveInterval, repeats: false, block: {_ in setButtonIsDisabled = false})
+    }
     
     func randomOutsideOffset() -> AnyTransition {
         let height = bounds.height
@@ -71,13 +118,19 @@ struct GameOfSetView: View {
         return .offset(CGSize(width: x, height:y))
 
     }
-    // MARK: -Constants
+    // MARK: -  Constants
     let bounds: CGRect = UIScreen.main.bounds
     let choosenCardScale: CGFloat = 1.2
+    let cardMatchRotationDegree: Double = 360
+    let cardDefaultRotationDegree: Double = 0
+    let setButtonNotActiveInterval: Double = 5
 }
 
 
 struct SetCardView: View {
+    let card: SetCard
+    let showCheat: Bool
+    
     var color: Color {
         switch card.color {
         case .purple: return Color.purple
@@ -93,33 +146,47 @@ struct SetCardView: View {
         }
     }
     
-    var card: SetCard
+    func symbolView() -> some View {
+        ZStack {
+            switch card.symbol {
+            case .oval:
+                switch card.shading {
+                case .open: Capsule().opacity(0)
+                case .solid: Capsule().fill()
+                case .striped: Capsule().stripes(color0: color)
+                }
+                Capsule().stroke(lineWidth: symbolStrokeWidth)
+            case .diamond:
+                switch card.shading {
+                case .open: Diamond().opacity(0)
+                case .solid: Diamond().fill()
+                case .striped: Diamond().stripes(color0:  color)
+                }
+                Diamond().stroke(lineWidth: symbolStrokeWidth)
+            case .squiggle:
+                switch card.shading {
+                case .open: Squiggle().opacity(0)
+                case .solid: Squiggle().fill()
+                case .striped: Squiggle().stripes(color0: color)
+                }
+                Squiggle().stroke(lineWidth: symbolStrokeWidth)
+            }
+        }
+    }
 
     var body: some View {
         print(card)
         return GeometryReader { geometry in
             ZStack {
-                RoundedRectangle(cornerRadius: 10)
+                RoundedRectangle(cornerRadius: 5)
                     .shadow(color: card.isMatched ? matchedColor : card.isWrongSet ? wrongColor : neitralColor, radius: card.isChoosen ? 5 : 0)
                     .shadow(color: card.isMatched ? matchedColor : card.isWrongSet ? wrongColor : neitralColor, radius: card.isChoosen ? 5 : 0)
+                    .shadow(color: showCheat ? matchedColor : .clear, radius: 5)
+                    .shadow(color: showCheat ? matchedColor : .clear, radius: 5)
+                    .animation(.linear)
                 VStack(spacing: nil) {
                     ForEach(Range(1...card.number)) { _ in
-                        ZStack{
-                            switch card.symbol {
-                            case .oval:
-                                Capsule().fill()
-                                    .opacity(opacityLevel)
-                                Capsule().stroke(lineWidth: symbolStrokeWidth)
-                            case .diamond:
-                                Diamond().fill()
-                                    .opacity(opacityLevel)
-                                Diamond().stroke(lineWidth: symbolStrokeWidth)
-                            case .squiggle:
-                                Ellipse().fill()
-                                    .opacity(opacityLevel)
-                                Ellipse().stroke(lineWidth: symbolStrokeWidth)
-                            }
-                        }
+                        symbolView()
                     }
                     .aspectRatio(2/1, contentMode: .fit)
                     .padding(.vertical, incardPadding(viewSize: geometry.size))
@@ -134,6 +201,7 @@ struct SetCardView: View {
                     .foregroundColor(matchedColor)
                     .opacity(card.isMatched ? 1 : 0)
                     .padding()
+                    .animation(.linear)
                     
             }
         }
@@ -150,7 +218,7 @@ struct SetCardView: View {
         let symbolsNumber: CGFloat = 3
         return viewSize.height * proportion / symbolsNumber
     }
-    let symbolStrokeWidth: CGFloat = 3.0
+    let symbolStrokeWidth: CGFloat = 1.0
     let solidOpacity: Double = 1
     let strippedOpacity: Double = 0.3
     let openOppacity: Double = 0
@@ -167,8 +235,7 @@ struct SetCardView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = SetGameProvider()
-        game.dealCards()
-        game.dealCards()
+        game.startGame()
         return GameOfSetView(game: game)
     }
 }
